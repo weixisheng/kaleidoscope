@@ -1,0 +1,50 @@
+/**
+ * SCSS 变量定义
+ * 
+ * @author 米多团队
+ */
+
+// 主色调
+$primary-color: #1675d1;
+$primary-light: #4d91db;
+$primary-dark: #1260a8;
+
+// 辅助色
+$success-color: #67c23a;
+$warning-color: #e6a23c;
+$danger-color: #f56c6c;
+$info-color: #909399;
+
+// 文字颜色
+$text-primary: #303133;
+$text-regular: #606266;
+$text-secondary: #909399;
+$text-placeholder: #c0c4cc;
+
+// 边框颜色
+$border-primary: #dcdfe6;
+$border-light: #e4e7ed;
+$border-lighter: #ebeef5;
+$border-extra-light: #f2f6fc;
+
+// 背景色
+$bg-primary: #ffffff;
+$bg-light: #f5f7fa;
+$bg-lighter: #fafafa;
+
+// 间距
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// 圆角
+$border-radius-sm: 2px;
+$border-radius-md: 4px;
+$border-radius-lg: 8px;
+
+// 阴影
+$box-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+$box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.12), 0 0 8px rgba(0, 0, 0, 0.04);
+$box-shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.15);

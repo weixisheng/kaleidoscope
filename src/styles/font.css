@@ -1,0 +1,18 @@
+@font-face {
+    font-family: "iconfont"; /* Project id 4995576 */
+    src: url('//at.alicdn.com/t/c/font_4995576_qcpgn7mj4s.woff2?t=1754740436415') format('woff2'),
+         url('//at.alicdn.com/t/c/font_4995576_qcpgn7mj4s.ttf?t=1754740436415') format('truetype');
+  }
+  
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .mdicon-logo:before {
+    content: "\e6bf";
+  }
+  
