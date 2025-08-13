@@ -3,7 +3,7 @@
         <!-- 页面头部 -->
         <div class="page-header">
             <div class="header-left">
-                <img src="@/static/logo.svg" alt="公司Logo" class="company-logo" />
+                <img src="@/static/LOGO.svg" alt="公司Logo" class="company-logo" />
                 <h1 class="page-title">总后台客户详情</h1>
             </div>
             <div class="header-right">

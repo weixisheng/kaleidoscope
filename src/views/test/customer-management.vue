@@ -3,7 +3,7 @@
         <!-- 页面头部 -->
         <div class="page-header">
             <div class="logo">
-                <img src="@/static/logo.svg" alt="公司Logo" class="logo-img" />
+                <img src="@/static/LOGO.svg" alt="公司Logo" class="logo-img" />
             </div>
             <div class="header-actions">
                 <el-button type="danger" @click="handleLogout">退出登录</el-button>
