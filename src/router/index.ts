@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory  } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 // import asyncRoutes from './modules/async-routes'
 import presetRoutes from './modules/preset-routes'

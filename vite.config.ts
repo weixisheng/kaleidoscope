@@ -55,19 +55,19 @@ export default defineConfig(({ mode }) =>{
         }
       }
     },
-    experimental: {
-      renderBuiltUrl(filename, { hostType }) {
-        // 在生产模式下，让CSS和JS资源使用CDN地址
-        // 在production和preview模式下都使用CDN前缀
-        if (mode === 'production') {
-          // 对于JS和CSS文件，使用CDN前缀
-          if (filename.includes('.js') || filename.includes('.css')) {
-            return env.VITE_CDN_PREFIX + filename.replace(/^\//, '')
-          }
-        }
-        // 其他文件保持默认行为
-        return { relative: true }
-      },
-    },
+    // experimental: {
+    //   renderBuiltUrl(filename, { hostType }) {
+    //     // 在生产模式下，让CSS和JS资源使用CDN地址
+    //     // 在production和preview模式下都使用CDN前缀
+    //     if (mode === 'production') {
+    //       // 对于JS和CSS文件，使用CDN前缀
+    //       if (filename.includes('.js') || filename.includes('.css')) {
+    //         return env.VITE_CDN_PREFIX + filename.replace(/^\//, '')
+    //       }
+    //     }
+    //     // 其他文件保持默认行为
+    //     return { relative: true }
+    //   },
+    // },
   }
 })

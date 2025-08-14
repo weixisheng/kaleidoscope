@@ -6,7 +6,7 @@
   
   属性定义:
   - tableConfig: ITableConfig - 表格配置对象
-    - table: TableProps - Element Plus 表格属性
+    - table: TableProps - Element Plus 表格属性（默认：无边框、有斑马纹、居中对齐）
     - pagination: boolean | PaginationProps - 分页配置
     - pagePosition: 'left' | 'right' - 分页位置，默认右对齐
     - indexAction: Function - 数据请求函数
@@ -18,6 +18,11 @@
       - operat: Array - 操作列按钮配置（tool模板使用）
       - slotName: string - 自定义插槽名（custom模板使用）
     - pk: string - 主键字段名，默认'id'
+  
+  默认样式配置:
+  - stripe: true - 默认开启斑马纹
+  - border: false - 默认无边框
+  - 表头和内容默认居中对齐
   
   事件定义:
   - operateClick: (data: IOperateData) => void - 操作列按钮点击事件
@@ -70,7 +75,7 @@
 <template>
     <div class="ka-table">
         <!-- 列表 -->
-        <el-table ref="tableRef" v-loading="loading" v-bind="tableConfig.table" :data="pageData" :row-key="pk"
+        <el-table ref="tableRef" v-loading="loading" v-bind="mergedTableConfig" :data="pageData" :row-key="pk"
             class="table-content" @selection-change="handleSelectionChange">
             <template v-for="col in cols" :key="col.prop || col.type">
                 <el-table-column v-if="col.show" v-bind="col">
@@ -173,6 +178,17 @@ const emit = defineEmits<{
 
 // 主键
 const pk = props.tableConfig.pk ?? "id";
+
+// 默认表格配置
+const defaultTableConfig = {
+    stripe: true,  // 默认开启斑马纹
+    border: false, // 默认无边框
+    'header-cell-style': { textAlign: 'center' },
+    'cell-style': { textAlign: 'center' }
+};
+
+// 合并表格配置
+const mergedTableConfig = { ...defaultTableConfig, ...props.tableConfig.table };
 
 // 默认操作按钮配置
 const defaultOperateButtons: Record<string, IOperateButton> = {

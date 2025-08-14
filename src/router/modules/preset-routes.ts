@@ -1,16 +1,7 @@
 export default [
   {
     path: '/',
-    redirect: '/test/customer-detail'
-  },
-  {
-    path: '/test/customer-detail',
-    name: 'CustomerDetail',
-    component: () => import('@/views/test/customer-detail.vue'),
-    meta: {
-      title: '总后台客户详情',
-      icon: 'User'
-    }
+    redirect: '/test/customer-management'
   },
   {
     path: '/test/customer-management',
@@ -23,6 +14,6 @@ export default [
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/test/customer-detail'
+    redirect: '/test/customer-management'
   }
 ]

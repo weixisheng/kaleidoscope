@@ -9,8 +9,8 @@
 </script>
 
 <style lang="scss">
+@use '@/styles/main.scss' as *;
 @import '@/styles/font.css';
-@import '@/styles/main.scss';
 
 // 全局样式重置
 * {

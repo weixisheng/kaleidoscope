@@ -2,11 +2,23 @@
     <div class="customer-management">
         <!-- 页面头部 -->
         <div class="page-header">
-            <div class="logo">
-                <img src="@/static/LOGO.svg" alt="公司Logo" class="logo-img" />
+            <div class="header-left">
+                <img src="@/static/LOGO.svg" alt="公司Logo" class="logo" />
             </div>
-            <div class="header-actions">
-                <el-button type="danger" @click="handleLogout">退出登录</el-button>
+            <div class="header-right">
+                <el-dropdown @command="handleCommand">
+                    <span class="user-info">
+                        <el-avatar :size="32" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+                        <span class="username">管理员</span>
+                        <el-icon class="el-icon--right"><arrow-down /></el-icon>
+                    </span>
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                            <el-dropdown-item command="settings">个人设置</el-dropdown-item>
+                            <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
             </div>
         </div>
 
@@ -18,18 +30,20 @@
 
         <!-- 数据表格 -->
         <ka-table ref="tableRef" :table-config="tableConfig" @operate-click="handleOperateClick">
-            <!-- 标签名称插槽 -->
+            <!-- 标签名称插槽 - 纯展示tag -->
             <template #tagName="{ row }">
-                <el-link type="primary" @click="handleTagDetail(row)">
-                    {{ row.tagName }}
-                </el-link>
+                <el-tag type="primary">{{ row.tagName }}</el-tag>
             </template>
 
-            <!-- 关联客户数插槽 -->
+            <!-- 关联客户数插槽 - 可点击 -->
             <template #customerCount="{ row }">
-                <el-link type="success" @click="handleCustomerList(row)">
+                <el-button 
+                    type="primary" 
+                    link 
+                    @click="handleViewCustomers(row)"
+                >
                     {{ row.customerCount }}
-                </el-link>
+                </el-button>
             </template>
         </ka-table>
     </div>
@@ -38,6 +52,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { ArrowDown } from '@element-plus/icons-vue'
 import KaSearchForm from '@/packages/basic/ka-search-form/index.vue'
 import KaTable from '@/packages/basic/ka-table/index.vue'
 import KaButtonGroup from '@/packages/basic/ka-button-group/index.vue'
@@ -88,20 +103,14 @@ const buttonConfig = ref<IButtonConfig[]>([
 // 表格配置
 const tableConfig = reactive<ITableConfig>({
     indexAction: fetchCustomerData,
-    table: {
-        // border: true,
-        stripe: true,
-        'header-cell-style': { textAlign: 'center' },
-        'cell-style': { textAlign: 'center' }
-    },
     pagination: {
         pageSizes: [10, 20, 50, 100],
         layout: 'total, sizes, prev, pager, next, jumper'
     },
     cols: [
         { type: 'selection', width: 55 },
-        { prop: 'tagName', label: '标签名称', template: 'custom', slotName: 'tagName', minWidth: 120 },
-        { prop: 'tagDescription', label: '标签说明', minWidth: 200 },
+        { prop: 'tagName', label: '标签名称', template: 'custom', slotName: 'tagName', width: 150 },
+        { prop: 'description', label: '标签说明', template: 'text', align: 'left' },
         { prop: 'customerCount', label: '关联客户数', template: 'custom', slotName: 'customerCount', width: 120 },
         { prop: 'creator', label: '创建人', width: 100 },
         { prop: 'createTime', label: '创建时间', template: 'date', width: 160 },
@@ -126,23 +135,74 @@ const tableConfig = reactive<ITableConfig>({
 
 // 模拟数据请求函数
 async function fetchCustomerData(params: any): Promise<any> {
-    // 模拟API请求
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const mockData = {
-                total: 100,
-                list: Array.from({ length: params.pageSize || 10 }, (_, index) => ({
-                    id: (params.pageNum - 1) * params.pageSize + index + 1,
-                    tagName: `客户标签${(params.pageNum - 1) * params.pageSize + index + 1}`,
-                    tagDescription: `这是客户标签${(params.pageNum - 1) * params.pageSize + index + 1}的详细说明`,
-                    customerCount: Math.floor(Math.random() * 100) + 1,
-                    creator: `用户${index + 1}`,
-                    createTime: new Date(Date.now() - Math.random() * 10000000000).toISOString()
-                }))
-            }
-            resolve(mockData)
-        }, 500)
-    })
+    console.log('请求参数:', params)
+    
+    // 模拟API请求延迟
+    await new Promise(resolve => setTimeout(resolve, 500))
+    
+    // 模拟数据
+    const mockData = [
+        {
+            id: 1,
+            tagName: 'VIP客户',
+            description: '高价值客户，享受专属服务',
+            customerCount: 156,
+            creator: '张三',
+            createTime: '2024-01-15 10:30:00'
+        },
+        {
+            id: 2,
+            tagName: '新客户',
+            description: '近期注册的新用户',
+            customerCount: 89,
+            creator: '李四',
+            createTime: '2024-01-14 14:20:00'
+        },
+        {
+            id: 3,
+            tagName: '活跃用户',
+            description: '近30天内有活跃行为的用户',
+            customerCount: 234,
+            creator: '王五',
+            createTime: '2024-01-13 09:15:00'
+        },
+        {
+            id: 4,
+            tagName: '潜在客户',
+            description: '有购买意向但未下单的客户',
+            customerCount: 67,
+            creator: '赵六',
+            createTime: '2024-01-12 16:45:00'
+        },
+        {
+            id: 5,
+            tagName: '流失客户',
+            description: '超过90天未活跃的客户',
+            customerCount: 45,
+            creator: '孙七',
+            createTime: '2024-01-11 11:30:00'
+        }
+    ]
+    
+    // 模拟搜索过滤
+    let filteredData = mockData
+    if (params.tagName) {
+        filteredData = mockData.filter(item => 
+            item.tagName.includes(params.tagName)
+        )
+    }
+    
+    // 模拟分页
+    const pageSize = params.pageSize || 10
+    const currentPage = params.currentPage || 1
+    const start = (currentPage - 1) * pageSize
+    const end = start + pageSize
+    const pageData = filteredData.slice(start, end)
+    
+    return {
+        total: filteredData.length,
+        list: pageData
+    }
 }
 
 // 按钮点击处理
@@ -191,16 +251,10 @@ function handleBatchDelete() {
     })
 }
 
-// 标签详情
-function handleTagDetail(row: Record<string, any>) {
-    ElMessage.info(`查看标签详情: ${row.tagName}`)
-    // TODO: 跳转到标签详情页面
-}
-
-// 客户列表
-function handleCustomerList(row: Record<string, any>) {
-    ElMessage.info(`查看关联客户列表: ${row.tagName}`)
-    // TODO: 跳转到客户列表页面
+// 查看关联客户
+function handleViewCustomers(row: any) {
+    ElMessage.info(`查看标签"${row.tagName}"的关联客户列表`)
+    // 这里可以跳转到客户列表页面或打开弹窗
 }
 
 // 表格操作列点击
@@ -243,6 +297,18 @@ function handleDelete(row: Record<string, any>) {
 
 
 
+// 头部下拉菜单处理
+function handleCommand(command: string) {
+    switch (command) {
+        case 'settings':
+            ElMessage.info('个人设置功能待实现')
+            break
+        case 'logout':
+            handleLogout()
+            break
+    }
+}
+
 // 退出登录
 function handleLogout() {
     ElMessageBox.confirm('确定要退出登录吗？', '退出确认', {
@@ -267,20 +333,35 @@ function handleLogout() {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
     padding: 16px 24px;
-    margin-bottom: 20px;
+    background: white;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.logo-img {
+.header-left .logo {
     height: 40px;
     width: auto;
 }
 
-.header-actions {
+.header-right .user-info {
     display: flex;
     align-items: center;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.header-right .user-info:hover {
+    background-color: #f5f5f5;
+}
+
+.username {
+    margin-left: 8px;
+    margin-right: 4px;
+    font-size: 14px;
+    color: #333;
 }
 </style>
