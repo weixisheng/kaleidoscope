@@ -1,12 +1,12 @@
-import { createRouter, createWebHistory  } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 // import asyncRoutes from './modules/async-routes'
 import presetRoutes from './modules/preset-routes'
 
 // 合并所有路由
 const routes: RouteRecordRaw[] = [
-  // ...asyncRoutes, 
-  ...presetRoutes
+  // ...asyncRoutes,
+  ...presetRoutes,
 ]
 
 // 创建路由实例
